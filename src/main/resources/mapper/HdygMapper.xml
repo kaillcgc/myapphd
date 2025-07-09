@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 本映射文件对应GoodsDao接口 -->
+<mapper namespace="com.example.demo.DAO.HdygDAO">
+    <!-- 对应GoodsDao中的insert方法 -->
+    <insert id="insert" parameterType="com.example.demo.DAO.HdygDAO">
+        insert into hdyg (date,activity) values (#{date},#{activity})
+    </insert>
+    <!-- 对应GoodsDao中的delete方法 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from hdyg where id=#{id}
+    </delete>
+    <!-- 对应GoodsDao中的update方法 -->
+    <update id="update" parameterType="com.example.demo.DAO.HdygDAO">
+        update hdyg set date=#{date},activity=#{activity} where id=#{id}
+    </update>
+    <!-- 对应GoodsDao中的selectOne方法 -->
+    <select id="select" resultMap="resultMapBase" parameterType="java.lang.Long">
+        select <include refid="sqlBase" /> from hdyg where id = #{id}
+    </select>
+    <!-- 对应GoodsDao中的selectAll方法 -->
+    <select id="selectAll" resultMap="resultMapBase">
+        select <include refid="sqlBase" /> from hdyg
+    </select>
+
+    <!-- 可复用的sql模板 -->
+    <sql id="sqlBase">
+        id,date,activity
+    </sql>
+    <!-- 保存SQL语句查询结果与实体类属性的映射 -->
+    <resultMap id="resultMapBase" type="com.example.demo.Do.HdygDo">
+        <id column="id" property="id" />
+        <result column="date" property="date"/>
+        <result column="activity" property="activity" />
+    </resultMap>
+</mapper>

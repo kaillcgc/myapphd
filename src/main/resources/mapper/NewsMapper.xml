@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 本映射文件对应GoodsDao接口 -->
+<mapper namespace="com.example.demo.DAO.NewsDAO">
+    <!-- 对应GoodsDao中的insert方法 -->
+    <insert id="insert" parameterType="com.example.demo.DAO.NewsDAO">
+        insert into news (title,content,author,pubtime,keyword,acnumber,newstype) values (#{title},#{content},#{author},#{pubtime},#{keyword},#{acnumber},#{newstype})
+    </insert>
+    <!-- 对应GoodsDao中的delete方法 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from news where id=#{id}
+    </delete>
+    <!-- 对应GoodsDao中的update方法 -->
+    <update id="update" parameterType="com.example.demo.DAO.NewsDAO">
+        update news set title=#{title},content=#{content},author=#{author},pubtime=#{pubtime},newstype=#{newstype} where id=#{id}
+    </update>
+    <!-- 对应GoodsDao中的selectOne方法 -->
+    <select id="select" resultMap="resultMapBase" parameterType="java.lang.Long">
+        SELECT
+            n.id, n.title, n.content, n.author, n.pubtime,
+            n.keyword, n.acnumber, n.newstype AS newstype,
+            t.newstype AS typeName
+        FROM news n
+                 LEFT JOIN newstype t ON n.newstype = t.id
+        WHERE n.id = #{id}
+    </select>
+    <!-- 对应GoodsDao中的selectAll方法 -->
+    <select id="selectAll" resultMap="resultMapBase">
+        SELECT
+            n.id, n.title, n.content, n.author, n.pubtime,
+            n.keyword, n.acnumber, n.newstype AS newstypeId,
+            t.newstype AS typeName
+        FROM news n
+                 LEFT JOIN newstype t ON n.newstype = t.id
+    </select>
+
+    <select id="getAllTypes" resultType="com.example.demo.Do.NewstypeDo">
+        SELECT id, newstype AS typeName FROM newstype
+    </select>
+
+    <!-- 可复用的sql模板 -->
+    <sql id="sqlBase">
+        n.id, n.title, n.content, n.author, n.pubtime, n.keyword, n.acnumber,
+        n.newstype AS newstypeId,
+        t.type_name AS newstypeName
+    </sql>
+    <!-- 保存SQL语句查询结果与实体类属性的映射 -->
+    <resultMap id="resultMapBase" type="com.example.demo.Do.NewsDo">
+        <id column="id" property="id" />
+        <result column="title" property="title"/>
+        <result column="content" property="content" />
+        <result column="author" property="author" />
+        <result column="pubtime" property="pubtime" />
+        <result column="keyword" property="keyword" />
+        <result column="acnumber" property="acnumber" />
+        <result column="newstype" property="newstype" />
+        <result column="typeName" property="typeName" />
+    </resultMap>
+</mapper>
