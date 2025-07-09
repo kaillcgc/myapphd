@@ -4,7 +4,7 @@
 <mapper namespace="com.example.demo.DAO.UserDAO">
     <!-- 对应GoodsDao中的insert方法 -->
     <insert id="insert" parameterType="com.example.demo.DAO.UserDAO">
-        insert into userlist (yhm,mm,xb,jzd,zy,grjj,js) values (#{yhm},#{mm},#{xb},#{jzd},#{zy},#{grjj},'guest')
+        insert into userlist (yhm,mm,xb,jzd,zy,grjj,js) values (#{yhm},#{mm},#{xb},#{jzd},#{zy},#{grjj},'user')
     </insert>
     <!-- 对应GoodsDao中的delete方法 -->
     <delete id="delete" parameterType="java.lang.Long">
